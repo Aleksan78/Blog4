@@ -1,0 +1,47 @@
+﻿@using Blog2.DAL.Models;
+@model List<Post>
+
+@if (!Model.Any())
+{
+    <h5 class="card-title text-muted">Статей пока нет...</h5>
+    <a asp-controller="Post" asp-action="CreatePost" class="btn btn-primary mb-3">Написать первую статью</a>
+}
+else
+{
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Все статьи</h2>
+        <a asp-controller="Post" asp-action="CreatePost" class="btn btn-success">Добавить статью</a>
+    </div>
+
+    @foreach (var post in Model)
+    {
+        <div class="card w-75 mb-3 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title text-primary">@post.Title</h4>
+
+                <div class="mb-3">
+                    <span class="text-muted me-2">Теги:</span>
+                    @foreach (var tag in post.Tags)
+                    {
+                        <span class="badge rounded-pill bg-success me-1">@tag.Name</span>
+                    }
+                </div>
+
+                <div class="btn-group">
+                    @* Кнопка просмотра доступна всем *@
+                    <a class="btn btn-outline-secondary btn-sm" asp-controller="Post" asp-action="ShowPost" asp-route-id="@post.Id">Просмотреть</a>
+
+                    @if (User.IsInRole("Администратор"))
+                    {
+                        <a class="btn btn-outline-info btn-sm" asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id">Редактировать</a>
+
+                        @* Форма для безопасного удаления методом POST *@
+                        <form asp-controller="Post" asp-action="RemovePost" asp-route-id="@post.Id" method="post" style="display:inline;" onsubmit="return confirm('Вы уверены, что хотите удалить эту статью?')">
+                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-start-0">Удалить</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,62 @@
+﻿@model Blog2.BLL.ViewModels.Posts.PostCreateViewModel
+
+<div class="container-page">
+    <h2 class="title-margin">Добавление статьи</h2>
+    <form method="post" asp-controller="Post" asp-action="CreatePost">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        
+        <div style="margin-bottom: 10px">
+            <label asp-for="Title"></label><br />
+            <input class="form-control" asp-for="Title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div style="margin-bottom: 15px">
+            <label>Выберите теги:</label>
+            <table class="table-sm">
+                @if (Model?.Tags != null)
+                {
+                    @for (int i = 0; i < Model.Tags.Count; i++)
+                    {
+                        if (i % 3 == 0)
+                        {
+                            @:<tr>
+                        }
+                        <td>
+                            @Html.CheckBoxFor(model => model.Tags[i].IsSelected)
+                            @* Исправлено lable на label *@
+                            <label class="tag-margin">@Model.Tags[i].Name</label>
+                            
+                            @* Скрытые поля для ID и Name, чтобы данные не терялись при перегрузке формы *@
+                            @Html.HiddenFor(model => model.Tags[i].Id)
+                            @Html.HiddenFor(model => model.Tags[i].Name)
+                        </td>
+                        if (i % 3 == 2 || i == Model.Tags.Count - 1)
+                        {
+                            @:</tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+
+        <div style="margin-bottom: 15px">
+            <label asp-for="Body"></label><br />
+            @* Убрали value="", текст привяжется через asp-for автоматически *@
+            <textarea class="form-control" id="editor" rows="10" asp-for="Body"></textarea>
+            <span asp-validation-for="Body" class="text-danger"></span>
+        </div>
+
+        <div class="mt-3">
+            <input class="btn btn-primary" type="submit" value="Опубликовать статью" />
+        </div>
+
+        <p class="mt-3">
+            <a asp-controller="Post" asp-action="GetPosts">Назад к списку статей</a>
+        </p>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,33 @@
+﻿@model Blog2.BLL.ViewModels.Tags.TagEditViewModel
+
+<div class="container-page">
+    <h2 class="title-margin">Редактирование тега</h2>
+
+    <form method="post" asp-controller="Tag" asp-action="EditTag">
+        @* Общая сводка ошибок *@
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        @* Скрытый Id для идентификации тега сервером *@
+        <input asp-for="Id" type="hidden" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label><br />
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <input class="btn btn-sm btn-primary" type="submit" value="Сохранить изменения" />
+        </div>
+
+        <p>
+            <a asp-controller="Tag" asp-action="GetTags">Вернуться к списку тегов</a>
+        </p>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

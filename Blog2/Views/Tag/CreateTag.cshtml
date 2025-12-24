@@ -1,0 +1,32 @@
+﻿@model Blog2.BLL.ViewModels.Tags.TagCreateViewModel
+
+<div class="container-page">
+    <h2 class="title-margin">Добавление тега</h2>
+
+    <form method="post" asp-controller="Tag" asp-action="CreateTag">
+        @* Сводка ошибок *@
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input class="form-control" asp-for="Name" placeholder="Введите название тега..." />
+            @* Сообщение об ошибке для поля Name *@
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Создать" />
+        </div>
+
+        <p>
+            <a asp-controller="Tag" asp-action="GetTags">Перейти к списку всех тегов</a>
+        </p>
+    </form>
+</div>
+
+@* Подключение клиентской валидации *@
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

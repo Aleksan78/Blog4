@@ -1,0 +1,19 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Blog2.DAL.Models
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container-page">
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+
+    }
+    else
+    {
+
+    }
+</div>

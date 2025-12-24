@@ -1,0 +1,38 @@
+﻿@using Blog2.DAL.Models;
+@model List<Tag>
+
+@if (!Model.Any())
+{
+    <div class="mb-3">
+        <h5 class="card-title">Нет данных для отображения</h5>
+        <a class="btn btn-success btn-sm" asp-controller="Tag" asp-action="CreateTag">Добавить первый тег</a>
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-between align-items-center mb-3 w-75">
+        <h5 class="card-title">Все теги</h5>
+        <a class="btn btn-success btn-sm" asp-controller="Tag" asp-action="CreateTag">Добавить тег</a>
+    </div>
+
+    @foreach (var tag in Model)
+    {
+        <div class="card w-75 mb-3 shadow-sm">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">@tag.Name</h5>
+
+                @if (User.IsInRole("Администратор"))
+                {
+                    <div class="btn-group">
+                        <a class="btn btn-outline-info btn-sm" asp-controller="Tag" asp-action="EditTag" asp-route-id="@tag.Id">Редактировать</a>
+
+                        @* Форма для удаления *@
+                        <form asp-controller="Tag" asp-action="RemoveTag" asp-route-id="@tag.Id" method="post" style="display:inline;" onsubmit="return confirm('Удалить тег?')">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Удалить</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

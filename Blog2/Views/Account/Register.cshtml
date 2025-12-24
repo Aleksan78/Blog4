@@ -1,0 +1,55 @@
+﻿@model Blog2.BLL.ViewModels.User.UserRegisterViewModel
+
+<div class="container-page">
+    <h2 class="title-margin">Регистрация пользователя</h2>
+    <form method="post" asp-controller="Account" asp-action="Register">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="mb-2">
+            <label asp-for="FirstName"></label><br />
+            <input class="form-control" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-2">
+            <label asp-for="LastName"></label><br />
+            <input class="form-control" asp-for="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-2">
+            <label asp-for="UserName"></label><br />
+            <input class="form-control" asp-for="UserName" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-2">
+            <label asp-for="Email"></label><br />
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-2">
+            <label asp-for="Password"></label><br />
+            <input class="form-control" asp-for="Password" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="mb-2">
+            @* Здесь текст "Подтвердите пароль" подтянется из [Display] в модели *@
+            <label asp-for="PasswordReg"></label><br />
+            <input class="form-control" asp-for="PasswordReg" type="password" />
+            <span asp-validation-for="PasswordReg" class="text-danger"></span>
+        </div>
+
+        <div class="mt-3">
+            <input class="btn btn-sm btn-primary" type="submit" value="Зарегистрироваться" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

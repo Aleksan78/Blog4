@@ -1,0 +1,45 @@
+﻿@model Blog2.BLL.ViewModels.Comments.CommentCreateViewModel
+
+<div class="container-page">
+    <h2 class="title-margin">Добавление комментария</h2>
+    <form method="post" asp-controller="Comment" asp-action="CreateComment">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        @* Скрытое поле для ID поста, к которому пишем коммент *@
+        <input type="hidden" asp-for="PostId" />
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="Title"></label><br />
+            <input class="form-control" asp-for="Title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="Description"></label><br />
+            @* Используем textarea для удобства написания длинных текстов *@
+            <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="Author"></label><br />
+            <input class="form-control" asp-for="Author" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+
+        <div style="margin-top: 10px">
+            <input class="btn btn-sm btn-primary" type="submit" value="Создать" />
+        </div>
+
+        <p style="margin-top: 10px">
+            @* Убран некорректный атрибут method *@
+            <a asp-controller="Post" asp-action="GetPosts">Перейти к списку всех статей</a>
+        </p>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

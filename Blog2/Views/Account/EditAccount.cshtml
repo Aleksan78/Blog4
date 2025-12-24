@@ -1,0 +1,77 @@
+﻿@model Blog2.BLL.ViewModels.User.UserEditViewModel
+
+<div class="container-page">
+    <h2 class="title-margin">Редактирование пользователя</h2>
+    <form method="post" asp-controller="Account" asp-action="EditAccount">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <input asp-for="Id" type="hidden" />
+
+        <div style="margin-bottom: 5px">
+            <table>
+                <label>Роли</label>
+                @if (Model?.Roles != null)
+                {
+                    @for (int i = 0; i < Model.Roles.Count; i++)
+                    {
+                        if (i % 3 == 0)
+                        {
+                            <tr></tr>
+                        }
+                        <td>
+                            @Html.CheckBoxFor(model => model.Roles[i].IsSelected)
+                            @* Исправлено lable на label *@
+                            <label class="tag-margin">@Model.Roles[i].Name</label>
+                            @Html.HiddenFor(model => model.Roles[i].Id)
+                        </td>
+                    }
+                }
+            </table>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="FirstName"></label><br />
+            <input class="form-control" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="LastName"></label><br />
+            <input class="form-control" asp-for="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="UserName"></label><br />
+            <input class="form-control" asp-for="UserName" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="Email"></label><br />
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div style="margin-bottom: 5px">
+            <label asp-for="NewPassword"></label><br />
+            <input class="form-control" asp-for="NewPassword" type="password" />
+            <span asp-validation-for="NewPassword" class="text-danger"></span>
+        </div>
+
+        <div style="margin-top: 15px">
+            <input class="btn btn-sm btn-primary" type="submit" value="Сохранить" />
+        </div>
+
+        <p style="margin-top: 10px">
+            <a asp-controller="Account" asp-action="GetAccounts">Перейти к списку всех пользователей</a>
+        </p>
+    </form>
+</div>
+
+@* Добавляем скрипты для работы валидации в браузере *@
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
